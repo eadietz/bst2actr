@@ -1,7 +1,7 @@
 (clear-all)
 (define-model suppression-task
  (sgp
-   :v nil ;; -model-output
+   :v t ;; -model-output
    :esc t ; enables subsymbolic computations
    :rt -2.5  ; minimum activation threshold
    :ol t    ; optimized learning parameter that approximates learning rule
@@ -257,7 +257,6 @@
     ==>
      =imaginal>
        fact =fact
-       interpretation =retrieval
        context =context
      +retrieval>
        isa meaning
