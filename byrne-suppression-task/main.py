@@ -4,16 +4,16 @@ import os
 import pandas as pd
 from sys import platform as _platform
 from Arguments_Collector import *
+from datetime import datetime
 
 class Main:
 
     headers_list = values_list = None
-
     response = False
     response_time = False
     schedule_time = 3
-
-    fact_set = ["essay", "not_essay", "library", "not_library"]
+    msec = 0
+    fact_set = ["essay"] #, "not_essay", "library", "not_library"]
 
     def __init__(self, cognitive_model_file, show_env_windows=True):
         self.show_env_windows = show_env_windows
@@ -31,6 +31,7 @@ class Main:
 
         self.results_df = pd.DataFrame(columns=["Context", "Fact", "Response"])
 
+
     def set_os_path_sep(self, path_to_file):
         return path_to_file.replace("/", "\\") if _platform.startswith("win") else path_to_file.replace("\\", "/")
 
@@ -40,6 +41,7 @@ class Main:
         actr.load_act_r_code(self.cognitive_model_file)
         actr.add_command("library-button", self.library_button,
                               "suppression task key press response monitor")
+        actr.add_command("print_output", self.print_output, "print output")
 
         ac = Arguments_Collector()
         actr.add_command("add_content", ac.add_content, "add models response to df")
@@ -77,11 +79,12 @@ class Main:
 
     def specify_and_pass(self, log_file_name=""):
         for i in range(100):
-            print(i)
-            #self.exp("simple", 'If_essay_then_library', '----------')
+            #print(i)
+            self.exp("simple", 'If_essay_then_library', '----------')
             #self.exp("alternative", 'If_essay_then_library', 'If_textbook_then_library')
-            self.exp("additional", 'If_essay_then_library', 'If_open_then_library')
+            #self.exp("additional", 'If_essay_then_library', 'If_open_then_library')
         self.results_df.to_csv("results.csv", mode="w", index=False, sep=";")
+        print("average time", self.msec/100)
         self.plot_table()
 
     def exp(self, context, f_sentence, s_sentence):
@@ -92,6 +95,7 @@ class Main:
 
         for index, fact in enumerate(list_of_facts):
             actr.start_hand_at_mouse()
+            start_time = actr.mp_time()
             actr.goal_focus("starting-goal")
 
             response = ''
@@ -118,13 +122,17 @@ class Main:
             actr.run(100000)
             while response == '':
                 actr.process_events()
+
+            end_time = actr.mp_time()
             new_row = {'Context': context, 'Fact': fact, "Response": response}
             self.results_df = self.results_df.append(new_row, ignore_index=True)
+            total_time = end_time - start_time
+            self.msec += total_time
 
-        actr.set_base_levels("(OPEN-NEC 2.1)")
-        actr.set_base_levels("(OPEN-SUF 1)")
-        actr.set_base_levels("(TEXTBOOK-SUF 1.9)")
-        actr.set_base_levels("(TEXTBOOK-NEC 0)")
+        actr.set_base_levels("(ESSAY 0)")
+        actr.set_base_levels("(SUFFICIENT 0)")
+        actr.set_base_levels("(NECESSARY 0)")
+        #actr.set_base_levels("(TEXTBOOK-NEC 0)")
 
 
 
@@ -159,6 +167,9 @@ class Main:
     def library_button(value):
         global response
         response = value
+
+    def print_output(self, value):
+        print(value)
 
 m = Main("cognitive-model-specification/model.lisp")
 m.connect_to_actr()
