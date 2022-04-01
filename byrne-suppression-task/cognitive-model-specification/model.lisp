@@ -257,6 +257,7 @@
     ==>
      =imaginal>
        fact =fact
+       interpretation =retrieval
        context =context
      +retrieval>
        isa meaning
@@ -377,6 +378,8 @@
  (set-base-levels (OPEN-SUF 1))
  (set-base-levels (TEXTBOOK-SUF 1.9))
  (set-base-levels (TEXTBOOK-NEC 0))
+ (set-base-levels (NECESSARY 0))
+ (set-base-levels (SUFFICIENT 0))
 
 
 
@@ -423,8 +426,4 @@
     +manual>
        isa    click-mouse
  )
-
-
-
-
- )
+)
