@@ -129,12 +129,12 @@ class Main:
             total_time = end_time - start_time
             self.msec += total_time
 
-        actr.set_base_levels("(ESSAY 0)")
-        actr.set_base_levels("(SUFFICIENT 0)")
-        actr.set_base_levels("(NECESSARY 0)")
-        #actr.set_base_levels("(TEXTBOOK-NEC 0)")
-
-
+        actr.set_base_levels("OPEN-NEC 2.1")
+        actr.set_base_levels("OPEN-SUF 0")
+        actr.set_base_levels("TEXTBOOK-SUF 1.9")
+        actr.set_base_levels("TEXTBOOK-NEC 0")
+        actr.set_base_levels("SUFFICIENT 0")
+        actr.set_base_levels("NECESSARY 0")
 
     def plot_table(self):
 
