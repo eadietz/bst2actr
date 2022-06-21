@@ -1019,3 +1019,12 @@ def set_base_levels(*features):
 
 def get_base_level(*features):
     return current_connection.evaluate_single("get-base-level", *features)
+
+
+def get_base_level(*features):
+    return current_connection.evaluate_single("get-base-level", *features)
+
+
+def remove_visual_finsts(*features):
+    return current_connection.evaluate_single("remove-visual-finsts", *features)
+
