@@ -1,0 +1,33 @@
+with (spp one-argument-respond :u 2.8)
+essay                       counts  percentage
+Context     Response
+additional  unknown       63        63.0
+            yes           37        37.0
+alternative yes           90        90.0
+            unknown       10        10.0
+simple      yes           90        90.0
+            unknown       10        10.0
+not_essay                       counts  percentage
+Context     Response
+additional  no            64        64.0
+            unknown       36        36.0
+alternative unknown       90        90.0
+            no            10        10.0
+simple      unknown       69        69.0
+            no            31        31.0
+library                       counts  percentage
+Context     Response
+additional  yes           65        65.0
+            unknown       35        35.0
+alternative unknown       90        90.0
+            yes           10        10.0
+simple      unknown       69        69.0
+            yes           31        31.0
+not_library                       counts  percentage
+Context     Response
+additional  unknown       63        63.0
+            no            37        37.0
+alternative no            89        89.0
+            unknown       11        11.0
+simple      no            90        90.0
+            unknown       10        10.0
